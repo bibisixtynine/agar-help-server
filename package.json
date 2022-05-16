@@ -1,0 +1,29 @@
+{
+  "//1": "describes your app and its dependencies",
+  "//2": "https://docs.npmjs.com/files/package.json",
+  "//3": "updating this file will download and update your packages",
+  "name": "agar-help-server",
+  "version": "0.0.1",
+  "description": "A websocket agar.team help server !",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ws": "^8.5.0",
+    "uuid": "^8.3.2",
+    "express": "^4.17.3"
+  },
+  "engines": {
+    "node": "10.x"
+  },
+  "repository": {
+    "url": "https://glitch.com/edit/#!/eko-server69"
+  },
+  "license": "MIT",
+  "keywords": [
+    "agar.team",
+    "glitch",
+    "websocket"
+  ]
+}

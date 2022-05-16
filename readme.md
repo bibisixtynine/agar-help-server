@@ -1,1 +1,0 @@
-agar.team help server
