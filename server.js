@@ -22,8 +22,8 @@ const express = require('express')
 //
 const zutils = require("./zutils");
 //
-const code = require("./codeExample.js")
-//                                                  
+//const code = require("./codeExample.js")
+//                                      
 // LIBs
 //                                                          \\
 //////////////////////////////////////////////////////////////
@@ -216,19 +216,21 @@ wss.on("connection", (socket) => {
   socket.on("message", (message) => {
     zutils.log(`✉️ : ${message}`);
     let msg = JSON.parse(message)
-    zutils.log(`✉️ : ${msg}`);
+    zutils.log(`✉️ : ${msg.request}`);
+    zutils.log(`✉️ : ${msg.fileName}`);
+
 
     
     //  🚀
     if (msg.request && (msg.request=='loadCode'))  {
-      let msg = {
+      console.log(msg)
+      let codeExample = zutils.loadFile(msg.fileName)
+      let answer = {
         answer:'loadCode',
-        code: code.codeExample()
-        //code: `console.log('############ CODE RECEIVED FROM SERVER')`
+        code: codeExample
       }
-      //console.log(code.codeExample())
       console.log('##### send code to client !')
-      socket.send(JSON.stringify(msg))
+      socket.send(JSON.stringify(answer))
     } else {
       wss.broadcast(`${message}`);
     }

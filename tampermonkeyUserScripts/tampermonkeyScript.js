@@ -14,7 +14,7 @@
 // - ad remover
 // - highlight virus
 // - auto run and reload
-// - zen view (green on black)
+// - zen view
 // - share position with other player using the script !
 // - transparent circles
 
@@ -41,8 +41,9 @@
     //      .onMessage( msg => {
     //        console.log('💥 "' + msg.text + '" received from "' + msg.from + '"')
     //      })
-
+    //
     class BBSocket {
+        //
         constructor(webServerURL) {
             this.webServerURL = webServerURL
             this.websocketServer = undefined;
@@ -56,21 +57,25 @@
             this.connect();
         }
 
+        //
         onConnect(onConnectClosure) {
             if (onConnectClosure) this.onConnectClosure = onConnectClosure;
             return this;
         }
 
+        //
         onMessage(onMessageClosure) {
             if (onMessageClosure) this.onMessageClosure = onMessageClosure;
             return this;
         }
-
+        
+        //
         sendMessage(msg) {
             this.websocketServer.send(JSON.stringify(msg));
             return this;
         }
 
+        //
         // all begin here... by a connection to server....
         connect() {
             this.websocketServer = new WebSocket(this.webServerURL);
@@ -106,8 +111,8 @@
             };
         }
 
+        //
         static test(webServerURL) {
-
             let com = new BBSocket(webServerURL)
             .onConnect(() => {
                 com.sendMessage({ text: 'Hello !', from: webServerURL });
@@ -122,20 +127,21 @@
     //                                                            \\
     ///////////////////////////////////////////////////////////////\\
 
-    window.BBSocket = BBSocket
 
-
-    class Code {
-        constructor(serverURL) {
+    /////////////////////////////////////////////////////////////////
+    //                                                            //
+    // CodeRunner
+    //
+    class CodeRunner {
+        //
+        constructor(serverURL, fileName) {
             this.serverURL = serverURL
+            this.fileName = fileName
             this.onLoadClosure = undefined
             this.code = ''
             this.load(this.serverURL)
         }
 
-        ///////////////////
-        //
-        // utils...
         //
         resetTimers() {
             let maxId = setTimeout(function () {}, 0);
@@ -146,6 +152,7 @@
             return this
         }
 
+        //
         run() {
             //this.resetTimers()
             localStorage.setItem("agar-team-chaminou-code", this.code);
@@ -157,12 +164,12 @@
             return this
         }
 
+        //
         load(serverURL) {
-
             let com = new BBSocket(serverURL)
             .onConnect(() => {
                 console.log("###### code request to the server")
-                com.sendMessage({request:'loadCode',fileName:'agarTeamChaminou.js'});
+                com.sendMessage({request:'loadCode',fileName:this.fileName});
             })
             .onMessage(msg => {
                 if (msg.answer) {
@@ -175,20 +182,30 @@
             return this
         }
 
+        //
         onLoad(closure) {
             this.onLoadClosure = closure
         }
-        //
-        // utils...
-        //
-        ///////////////////
     }
+    //
+    // CodeRunner
+    //                                                            \\
+    ///////////////////////////////////////////////////////////////\\
 
 
-    let code = new Code('wss://agar-help-server.glitch.me')
-    code.onLoad( ()=> {
-        code.run()
+    /////////////////////////////////////////////////////////////////
+    //                                                            //
+    // MAIN
+    //
+    window.BBSocket = BBSocket
+
+    let script = new CodeRunner('wss://agar-help-server.glitch.me', 'tampermonkeyUserScripts/agarTeamScript.js')
+    script.onLoad( ()=> {
+        script.run()
     })
-
+    //
+    // MAIN
+    //                                                            \\
+    ///////////////////////////////////////////////////////////////\\
 
 })();
