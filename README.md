@@ -1,4 +1,4 @@
-# WebSockets Echo Server using ws
+# WebSockets Server for agar.team tampermonkey script
 
 ## By Bibil on march 2022
 
