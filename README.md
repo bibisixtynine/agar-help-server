@@ -1,5 +1,8 @@
 # WebSockets Server for agar.team tampermonkey script
 
-## By Bibil on march 2022
+## By Bibil on may 2022
 
-This server re-expedite any received message !
+This server :
+- re-expedite any unknown received message
+- expedite scripts (ie agarTeamScript) asked by the tampermonkeyScript.js (which have to be installed on the client browser via tampermonkey extension)
+- display a web view

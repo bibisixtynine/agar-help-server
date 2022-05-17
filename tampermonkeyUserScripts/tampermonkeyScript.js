@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         agar.team.chaminou
 // @namespace    https://mysupercomputer.fun
-// @version      0.1
+// @version      0.2.0
 // @description  helper for agar.team (may work with other agar... add mote @match) virus mode
 // @author       chaminou
 // @match        https://agar.team
@@ -9,6 +9,8 @@
 // @grant        none
 // @license      MIT
 // ==/UserScript==
+
+
 
 // This script is designed to help with agar.team virus mode :
 // - ad remover
@@ -68,7 +70,7 @@
             if (onMessageClosure) this.onMessageClosure = onMessageClosure;
             return this;
         }
-        
+
         //
         sendMessage(msg) {
             this.websocketServer.send(JSON.stringify(msg));
